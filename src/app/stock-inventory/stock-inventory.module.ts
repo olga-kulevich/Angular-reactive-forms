@@ -7,6 +7,7 @@ import {StockInventoryComponent} from "./containers/stock-inventory/stock-invent
 import {StockBranchComponent} from "./components/stock-branch/stock-branch.component";
 import {StockSelectorComponent} from "./components/stock-selector/stock-selector.component";
 import {StockProductsComponent} from "./components/stock-products/stock-products.component";
+import {StockCounterComponent} from "./components/stock-counter/stock-counter.component";
 
 import {StockInventoryService} from "./services/stock-inventory.service";
 
@@ -15,7 +16,8 @@ import {StockInventoryService} from "./services/stock-inventory.service";
     StockInventoryComponent,
     StockProductsComponent,
     StockSelectorComponent,
-    StockBranchComponent
+    StockBranchComponent,
+    StockCounterComponent
   ],
   providers: [
     StockInventoryService
