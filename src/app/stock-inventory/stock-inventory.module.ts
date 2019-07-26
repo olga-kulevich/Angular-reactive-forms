@@ -7,7 +7,6 @@ import {StockBranchComponent} from "./components/stock-branch/stock-branch.compo
 import {StockSelectorComponent} from "./components/stock-selector/stock-selector.component";
 import {StockProductsComponent} from "./components/stock-products/stock-products.component";
 
-
 @NgModule({
   declarations: [
     StockInventoryComponent,
