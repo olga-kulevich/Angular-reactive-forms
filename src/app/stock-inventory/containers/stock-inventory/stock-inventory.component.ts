@@ -27,6 +27,10 @@ import {StockInventoryService} from "../../services/stock-inventory.service";
         (removed)="removeStock($event)">
       </stock-products>
       
+      <div class="stock-inventory__price">
+        Total: {{total | currency:'USD':true}}
+      </div>
+      
       <div class="stock-inventory__buttons">
         <button 
           type="submit"
@@ -48,6 +52,8 @@ import {StockInventoryService} from "../../services/stock-inventory.service";
 export class StockInventoryComponent implements OnInit{
 
   products: Product[];
+
+  total: number;
 
   productMap: Map<number, Product>;
   // {1: Product}
@@ -72,16 +78,25 @@ export class StockInventoryComponent implements OnInit{
 
     forkJoin(cart, products).
     subscribe(([cart, products]: [Item[], Product[]]) => {
-      const myMap = products
-        .map<[number, Product]>(product => [product.id, product]);
+      const myMap = products.map<[number, Product]>(product => [product.id, product]);
+      this.productMap = new Map<number, Product>(myMap); //{1: {}}
+      this.products = products;
+      cart.forEach(item => this.addStock(item));
 
-        this.productMap = new Map<number, Product>(myMap);
-        //{1: {}}
+      this.calculateTotal(this.form.get('stock').value);
 
-        this.products = products;
-
-        cart.forEach(item => this.addStock(item));
+      this.form.get('stock')
+        .valueChanges
+        .subscribe(value => this.calculateTotal(value))
     });
+  }
+
+  calculateTotal(value: Item[]) {
+    const total = value.reduce((prev, next) => {
+      return prev + next.quantity * (this.productMap.get(next.product_id).price);
+    }, 0);
+
+    this.total = total;
   }
 
   createStock(stock) {
@@ -93,7 +108,6 @@ export class StockInventoryComponent implements OnInit{
 
   addStock(stock){
     const control = this.form.get('stock') as FormArray;
-    console.log(stock);
     control.push(this.createStock(stock));
   }
 
