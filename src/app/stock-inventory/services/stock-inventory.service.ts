@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams } from "@angular/common/http";
 import {map, catchError} from "rxjs/operators";
 import { throwError, Observable } from 'rxjs';
 
@@ -32,6 +32,20 @@ export class StockInventoryService {
           //console.log(error);
           return throwError(error);
         }
+        )
+      )
+  }
+
+  checkBranchId(id: string): Observable<boolean> {
+    let params = new HttpParams().set('id', id);
+    return this.http
+      .get('http://localhost:3000/branches', {params}).pipe(
+        map((response: any) => response),
+        map((response: any) => !!response.length),
+        catchError ((error: any) => {
+            //console.log(error);
+            return throwError(error);
+          }
         )
       )
   }

@@ -13,8 +13,19 @@ import {FormGroup} from "@angular/forms";
           formControlName="branch">
         <div
           class="error"
+          *ngIf="required('branch')">
+          Branch ID is required
+        </div>
+        <div
+          class="error"
           *ngIf="invalid">
           Invalid Branch code: 1 letter, 3 numbers
+        </div>
+
+        <div
+          class="error"
+          *ngIf="unknown">
+         Unknown branch, please chech the ID
         </div>
         
         <input
@@ -35,6 +46,14 @@ import {FormGroup} from "@angular/forms";
 export class StockBranchComponent {
   @Input()
   parent: FormGroup;
+
+  get unknown()
+  {
+    return (
+      this.parent.get('store.branch').hasError('unknownBranch') &&
+      this.parent.get('store.branch').dirty
+    )
+  }
 
   get invalid()
   {

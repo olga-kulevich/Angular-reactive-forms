@@ -9,5 +9,11 @@
     { "id": 3, "price": 400, "name": "iPhone"},
     { "id": 4, "price": 2850, "name": "3mac book pro"},
     { "id": 5, "price": 300, "name": "7mac book pro"}
+  ],
+  "branches": [
+    {"id":  "B182"},
+    {"id":  "A779"},
+    {"id":  "C390"},
+    {"id":  "R262"}
   ]
 }
